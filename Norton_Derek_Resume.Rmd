@@ -1,0 +1,95 @@
+---
+name: Derek McCrae Norton
+address: "7315 Ashley Trace, Cumming, GA 30028"
+phone: (404) 805-7927
+email: "dnorton1@gmail.com"
+twitter: dermcnor
+github: dermcnor
+linkedin: dermcnor
+date: "`r format(Sys.time(), '%B %Y')`"
+headcolor: 414141
+output: 
+  vitae::awesomecv
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(vitae)
+library(readr)
+library(dplyr)
+library(tidyr)
+```
+
+# Introduction
+
+\footnotesize
+Director level analytics leader that is well versed in advanced statistical methods, predictive modeling, machine learning with specific focus on marketing analytics, credit scoring, and healthcare analytics.
+
+Proven ability to:
+
+* Build and manage analytics teams.
+* Develop, implement, and support complex statistical modeling, analysis and reporting techniques.
+* Consult and educate clients on enterprise analytics.
+* Develop and conduct analytic training.
+
+Specialties: Analytic Leadership, Analytic Consulting, Predictive Analytics, Data Science, Machine Learning 
+
+
+# Employment
+
+```{r}
+read_csv("work-history.csv") %>%
+  mutate(dates = paste(from, to, sep = " - ")) %>% 
+  detailed_entries(what = position, 
+                   when = dates,
+                   with = company, 
+                   where = location,
+                   why = details)
+```
+
+# Education
+
+\footnotesize
+```{r education, results='asis'}
+read_csv("education.csv") %>%
+  mutate(degree = paste0("\\textbf{", degree, "}")) %>% 
+  unite("edu", degree:dates, sep = ", ") %>% 
+  pull(edu) %>% 
+  cat(sep = "\n\n")
+```
+
+```{r}
+read_csv("education.csv") %>%
+  detailed_entries(.protect = TRUE,
+    what = university,
+    when = dates,
+    with = degree,
+    where = location
+  )
+```
+
+
+# Select Conference Presentations
+
+```{r}
+read_csv("presentations.csv") %>%
+  brief_entries(what = glue::glue("\\textbf{<title>} \\newline <conference>, <location> \\newline <url>", 
+                                  .open = "<", .close = ">"), 
+                when = date, 
+                .protect = FALSE)
+```
+
+# TECHNICAL SKILLS
+
+\footnotesize
+* __Statistics__: Predictive Modeling, Capture-Recapture Methods, Time Series Analysis, Text Mining
+* __Programming__: R, SQL, SAS, Python
+* __Big Data__: Hadoop, Spark
+
+
+# OTHER ACCOMPLISHMENTS
+
+\footnotesize
+* Founder and Director of the Atlanta R User Group (2008 – Present).
+* Over 500 hours tutoring and teaching advanced statistics.
+
